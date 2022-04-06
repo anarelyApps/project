@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="areas_array">
+        <item>Dublin 2</item>
+        <item>Dublin 8</item>
+    </string-array>
+    <string-array name="dublin2_array">
+        <item>Stephen\'s green</item>
+        <item>Iveagh garden</item>
+    </string-array>
+    <string-array name="dublin8_array">
+        <item>Phoenix park</item>
+    </string-array>
+</resources>
