@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="areas_array">
+        <item>-- no selected --</item>
         <item>Dublin 2</item>
         <item>Dublin 8</item>
     </string-array>
-    <string-array name="dublin2_array">
+    <string-array name="areas_values_array">
+        <item>-- no selected --</item>
+        <item>Dublin_2_array</item>
+        <item>Dublin_8_array</item>
+    </string-array>
+    <string-array name="Dublin_2_array">
+        <item>-- no selected --</item>
         <item>Stephen\'s green</item>
         <item>Iveagh garden</item>
     </string-array>
-    <string-array name="dublin8_array">
+    <string-array name="Dublin_8_array">
+        <item>-- no selected --</item>
         <item>Phoenix park</item>
     </string-array>
 </resources>
