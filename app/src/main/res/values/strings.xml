@@ -11,7 +11,14 @@
     <string name="hello_first_fragment">Select area</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <!-- more Strings -->
-    <string name="identifier_installation">0</string>
+    <string name="visit_key">var_id_visit</string>
+    <string name="install_key">var_id_installation</string>
+    <string name="area_key">var_area</string>
+    <string name="place_key">var_place</string>
+    <string name="lon_key">var_longitude</string>
+    <string name="lat_key">var_latitude</string>
+    <string name="document_key">var_id_document</string>
+    <string name="preference_file_key">com.example.myapp.location_info_file</string>
     <string name="Dublin_2_1">53.33817603653847, -6.259095529638853</string>
     <string name="Dublin_2_2" >53.335170834216726, -6.260983804688709</string>
     <string name="Dublin_8_1">53.356098261719225, -6.330375824225114</string>

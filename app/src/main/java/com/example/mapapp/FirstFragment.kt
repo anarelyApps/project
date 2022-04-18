@@ -100,7 +100,7 @@ class FirstFragment : Fragment() {
 
         }
 
-        val db = FirebaseFirestore.getInstance()
+        /*val db = FirebaseFirestore.getInstance()
         val user = hashMapOf(
             "first" to "Ada",
             "last" to "Lovelace",
@@ -115,7 +115,7 @@ class FirstFragment : Fragment() {
             .addOnFailureListener { e ->
                 Log.w("TAG", "Error adding document", e)
 
-            }
+            }*/
 
         sendMessageToFcm(11.2)
 
