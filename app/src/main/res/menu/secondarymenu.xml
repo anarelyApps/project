@@ -3,12 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/action_cagain"
+        android:icon="@drawable/ic_goback_name"
         android:orderInCategory="50"
         android:title="@string/previous"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/updates"
+        android:id="@+id/info"
+        android:icon="@drawable/ic_info_name"
+        android:orderInCategory="51"
+        android:title="Information"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/update"
         android:orderInCategory="51"
         android:title="Update"
+        android:icon="@drawable/ic_update_name"
         app:showAsAction="always" />
 </menu>

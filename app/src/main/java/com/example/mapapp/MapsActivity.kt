@@ -52,12 +52,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         var result:Boolean = true
-        val intent = Intent(this, MainBasicActivity::class.java)
+        //val intent = Intent(this, MainBasicActivity::class.java)
         when (item.itemId) {
             R.id.action_cagain ->
-                startActivity(intent)
-               // Log.d("TAG", " Testing menu item") // do whatever
-            R.id.updates ->
+                finish()
+               // startActivity(intent)
+            R.id.info ->
+                showInfoActivity()
+            R.id.update ->
                 updateData()
 
             else -> result = super.onOptionsItemSelected(item)
@@ -66,13 +68,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun updateData(){
-         Log.d("TAG", " Testing updateData function") // do whatever
+         Log.d("TAG", " Testing updateData function")
         getActualLocation()
 
         mMap.clear()
         addmarkers()
 
 
+    }
+
+    private fun showInfoActivity(){
+        val intent = Intent(this, InfoActivity::class.java)
+        //setResult(0)
+        startActivity(intent)
+        //this.finish()
     }
 
     private fun getActualLocation() {
@@ -107,8 +116,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val visitor = hashMapOf(
                     "userid" to idInst,
                     "location" to locationVisitor,
-                    "poid" to "",
-                    "placeid" to "",
+                   // "poid" to "",
+                   // "placeid" to "",
                     "datetime" to cal.time
                 )
 
@@ -131,7 +140,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                         }
                 } else{
-                    db.collection("visitors").document(idvisit.toString()).set(visitor)
+                    db.collection("visitors").document(idvisit.toString()).update("location", locationVisitor,
+                        "datetime", cal.time)
                 }
                 Log.d("TAG","latitude: ${it.latitude}, longitude: ${it.longitude}") // tvLongitude is a TextView
             }
@@ -152,6 +162,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .get()
             .addOnSuccessListener { querySnapshot ->
                 var tot:Int = 0
+                val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+                val zoom  = sharedPref.getString(getString(R.string.zoom_key), "0")!!.toFloat()
                 if(querySnapshot.documents.isNotEmpty()) {
                     querySnapshot.forEach { document ->
                         val geo: GeoPoint? = document.getGeoPoint("location")
@@ -161,18 +173,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         val location: LatLng = LatLng(geo!!.latitude.toDouble(), geo!!.longitude.toDouble())
                         val total: String = document.data["total"].toString()
                         val title: String = document.getString("poid").toString()
-                        mMap.addMarker(MarkerOptions().position(location).title("$title, Visitors: $total"))
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
-                        mMap.setMinZoomPreference(13F)
+                        val isMoved: Boolean? = document.getBoolean("isPosition")
 
+                        if (isMoved == true && querySnapshot.documents.size == 1) {
+                            mMap.addMarker(MarkerOptions().position(location).title("$title").snippet("Visitors: $total")).showInfoWindow()
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+                        }
+                        else {
+                            mMap.addMarker(MarkerOptions().position(location).title("$title").snippet("Visitors: $total"))
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+                        }
                         tot += (document.data["total"] as Long).toInt()
 
                         Log.d("TAG", "Read document with ID ${document.getGeoPoint("location")}")
                     }
 
+                    mMap.setMinZoomPreference(zoom)
                     addUpdates(tot)
                 }
-                // Log.d("TAG","management inst: ${place} documents ${querySnapshot.documents}")
+
             }
             .addOnFailureListener { exception ->
                 Log.w("TAG", "Error getting documents $exception")
@@ -183,6 +202,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val pref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         val idInst  = pref.getString(getString(R.string.install_key), "0")
         val idplace  = pref.getString(getString(R.string.place_key), "0")
+
 
         val c = Calendar.getInstance()
 
@@ -208,26 +228,36 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
     override fun onMapReady(googleMap: GoogleMap) {
+        val pref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        val zoom  = pref.getString(getString(R.string.zoom_key), "0")
+
         mMap = googleMap
-
-
-        /*db.collection("Management")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    Log.d("TAG", "${document.id} => ${document.data}")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.d("TAG", "Error getting documents: ", exception)
-            }*/
-
-
-        mMap.setMinZoomPreference(17F)
+        mMap.setMinZoomPreference(zoom!!.toFloat())
         mMap.getUiSettings().setMapToolbarEnabled(true);
 
         addmarkers()
 
+    }
 
+    override fun onPause() {
+        super.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        this.finish()
     }
 }

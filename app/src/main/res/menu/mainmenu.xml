@@ -5,6 +5,7 @@
         android:id="@+id/action_search"
         android:orderInCategory="50"
         android:title="@string/history"
+        android:icon="@drawable/ic_action_name"
         app:showAsAction="always" />
 
 </menu>

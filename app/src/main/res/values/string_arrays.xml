@@ -10,13 +10,27 @@
         <item>Dublin_2_array</item>
         <item>Dublin_8_array</item>
     </string-array>
+    <string-array name="areas_values_zoom_array">
+        <item></item>
+        <item>Dublin_2_zoom_array</item>
+        <item>Dublin_8_zoom_array</item>
+    </string-array>
     <string-array name="Dublin_2_array">
         <item></item>
         <item>Stephen\'s green</item>
         <item>Iveagh garden</item>
     </string-array>
+    <string-array name="Dublin_2_zoom_array">
+        <item></item>
+        <item>16.5F</item>
+        <item>17.3F</item>
+    </string-array>
     <string-array name="Dublin_8_array">
         <item></item>
         <item>Phoenix park</item>
+    </string-array>
+    <string-array name="Dublin_8_zoom_array">
+        <item></item>
+        <item>13.2F</item>
     </string-array>
 </resources>

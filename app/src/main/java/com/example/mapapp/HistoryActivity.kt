@@ -79,17 +79,41 @@ class HistoryActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         var result:Boolean = true
-        val intent = Intent(this, MainBasicActivity::class.java)
+       // val intent = Intent(this, MainBasicActivity::class.java)
 
         when (item.itemId) {
             R.id.action_cagain ->
-                startActivity(intent)
+                //startActivity(intent)
+            finish()
              //Log.d("TAG", " Testing menu item") // do whatever
 
             else -> result = super.onOptionsItemSelected(item)
         }
         return result
     }
+
+
+
+    override fun onPause() {
+        super.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        this.finish()
+    }
+
 }
 
 class MyAdapter(private val context: Context, private val arrayList: java.util.ArrayList<MyData>) : BaseAdapter() {

@@ -42,13 +42,24 @@ class MainBasicActivity : AppCompatActivity() {
                 val intent = Intent(this, MapsActivity::class.java)
                 val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
                 val strItem: String = resources.getStringArray(R.array.areas_values_array)[spinner1.selectedItemPosition]
-
-
+                val strItemzoom: String = resources.getStringArray(R.array.areas_values_zoom_array)[spinner1.selectedItemPosition]
+                val strZoom = if (strItemzoom == "Dublin_2_zoom_array")
+                                 resources.getStringArray(R.array.Dublin_2_zoom_array)[spinner2.selectedItemPosition]
+                               else
+                                 resources.getStringArray(R.array.Dublin_8_zoom_array)[spinner2.selectedItemPosition]
 
                 with (sharedPref.edit()) {
                     putString(
                         getString(com.example.mapapp.R.string.place_key),
                         strItem.replace("array",spinner2.selectedItemPosition.toString())
+                    )
+                    apply()
+                }
+
+                with (sharedPref.edit()) {
+                    putString(
+                        getString(com.example.mapapp.R.string.zoom_key),
+                        strZoom
                     )
                     apply()
                 }
@@ -144,11 +155,13 @@ class MainBasicActivity : AppCompatActivity() {
     }
 
 
+
     private fun getActualLocation(id: String?) {
 
         //************************** get location Longitude/Latitude ****************************
         var fusedLocationProviderClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-
+        //fusedLocationProviderClient.requestLocationUpdates()
+        //fusedLocationProviderClient.requestLocationUpdates()
         val task = fusedLocationProviderClient.lastLocation
 
         if (ActivityCompat
@@ -200,9 +213,10 @@ class MainBasicActivity : AppCompatActivity() {
 
                         }
                 } else{
-                    db.collection("visitors").document(idvisit.toString()).set(visitor)
+                    db.collection("visitors").document(idvisit.toString()).update("location", locationVisitor,
+                        "datetime", cal.time)
                 }
-                Log.d("TAG","latitude: ${it.latitude}, longitude: ${it.longitude}") // tvLongitude is a TextView
+                Log.d("TAG","latitude: ${it.latitude}, longitude: ${it.longitude}")
             }
             else
                 Log.d("TAG","it is null")
@@ -220,13 +234,43 @@ class MainBasicActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         var result:Boolean = true
-        val intent = Intent(this, HistoryActivity::class.java)
+
         when (item.itemId) {
             R.id.action_search ->
                // Log.d("TAG", " Testing menu item") // do whatever
-                startActivity(intent)
+                changeActivity()
             else -> result = super.onOptionsItemSelected(item)
         }
         return result
+    }
+    private fun changeActivity(){
+        val intent = Intent(this, HistoryActivity::class.java)
+        //setResult(0)
+        startActivity(intent)
+        //this.finish()
+    }
+
+    override fun onPause() {
+        super.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        this.finish()
     }
 }

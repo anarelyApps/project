@@ -21,14 +21,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MapApp">
         <activity
+            android:name=".InfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".HistoryActivity"
             android:exported="false"
             android:label="@string/title_activity_history"
-            android:theme="@style/Theme.MapApp.NoActionBar" />
-        <activity
-            android:name=".MainBasicActivity"
-            android:exported="true"
-            android:label="@string/title_activity_main_basic"
             android:theme="@style/Theme.MapApp.NoActionBar" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
@@ -46,9 +44,9 @@
             android:value="AIzaSyB-hNRjKs1wdzvyx4t0bPqp61PK3GSD2ag" />
 
         <activity
-            android:name=".MainActivity"
-            android:exported="false"
-            android:label="@string/title_activity_main"
+            android:name=".MainBasicActivity"
+            android:exported="true"
+            android:label="@string/title_activity_main_basic"
             android:theme="@style/Theme.MapApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
